@@ -38,8 +38,8 @@ buildscript {
                 "prometheus": "0.16.0"
         ]
 
-        bwcPluginDownloadLink = 'https://github.com/Aiven-Open/prometheus-exporter-plugin-for-opensearch/releases/download/' +
-                project.BWCPluginVersion + '/prometheus-exporter-' + project.BWCPluginVersion + '.zip'
+        bwcPluginDownloadLink = 'https://github.com/Psych0meter/prometheus-exporter-plugin-for-opensearch/releases/download/' +
+                project.BWCversion + '/prometheus-exporter-' + project.BWCPluginVersion + '.zip'
         baseName = "bwcCluster"
         bwcFilePath = "src/test/resources/org/opensearch/prometheus-exporter/bwc/"
         bwcPrometheusExporterPath = bwcFilePath + "prometheus-exporter/"
@@ -115,7 +115,7 @@ dependencies {
     testImplementation "org.opensearch.test:framework:${versions.opensearch}"
     testImplementation "org.opensearch.client:opensearch-rest-client:${versions.opensearch}"
 
-    testRuntimeOnly "org.opensearch:opensearch-javaagent:${versions.opensearch}"
+    // testRuntimeOnly "org.opensearch:opensearch-javaagent:${versions.opensearch}"
 }
 
 restResources {
@@ -351,4 +351,10 @@ task bwcTestSuite(type: RestIntegTestTask) {
 
 run {
     useCluster testClusters.integTest
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
 }

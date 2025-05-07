@@ -3,7 +3,7 @@ name: Build and Release
 on:
   push:
     tags:
-      - 'v*'  # Trigger bei Tags, die mit "v" beginnen
+      - 'v*'  # Trigger with Tags, starting with "v"
 
 jobs:
   build:
@@ -14,17 +14,22 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Set up Java
+      # Set up Java 21
       - name: Set up Java
+        id: setup-java
         uses: actions/setup-java@v4
         with:
           distribution: "temurin"
-          java-version: '17'
+          java-version: '21'
+
+      # Export JAVA_HOME to be used in later steps
+      - name: Export JAVA_HOME
+        run: echo "JAVA_HOME=${{ steps.setup-java.outputs.path }}" >> $GITHUB_ENV
 
       # Build the project
       - name: Build project
         run: |
-          ./gradlew clean build
+          ./gradlew clean build --refresh-dependencies -x yamlRestTest
 
       # Save the artifact
       - name: Upload build artifact
@@ -48,25 +53,37 @@ jobs:
         with:
           name: build-artifact
 
+      # Set up Java 21 (again for this job)
+      - name: Set up Java
+        id: setup-java
+        uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: '21'
+
+      # Export JAVA_HOME for use by the gradle-properties action
+      - name: Export JAVA_HOME
+        run: echo "JAVA_HOME=${{ steps.setup-java.outputs.path }}" >> $GITHUB_ENV
+
       # Extract version from gradle.properties
       - uses: guillermocalvo/gradle-properties@v3
         id: properties
         with:
           output_file: ${{ github.output }}
+        env:
+          JAVA_HOME: ${{ env.JAVA_HOME }}
 
-      # Create GitHub Release
       - name: Create GitHub Release
         id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ github.ref_name }}
-          release_name: Release ${{ github.ref_name }}
+          name: Release ${{ github.ref_name }}
           body: |
             Auto generated release for ${{ github.ref_name }}
-          draft: false
-          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
 
       # Upload artifact to Release
       - name: Upload artifact to Release

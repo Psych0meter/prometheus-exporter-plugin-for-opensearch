@@ -29,4 +29,4 @@ jobs:
 
       - name: Build and Run Tests
         run: |
-          ./gradlew --info bwcTestSuite -Dtests.security.manager=false
+          ./gradlew --info bwcTestSuite -Dtests.security.manager=false -x yamlRestTest

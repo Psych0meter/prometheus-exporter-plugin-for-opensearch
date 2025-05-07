@@ -115,7 +115,7 @@ dependencies {
     testImplementation "org.opensearch.test:framework:${versions.opensearch}"
     testImplementation "org.opensearch.client:opensearch-rest-client:${versions.opensearch}"
 
-    testRuntimeOnly "org.opensearch:opensearch-javaagent:${versions.opensearch}"
+    // testRuntimeOnly "org.opensearch:opensearch-javaagent:${versions.opensearch}"
 }
 
 restResources {

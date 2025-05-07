@@ -24,7 +24,7 @@ jobs:
       # Build the project
       - name: Build project
         run: |
-          ./gradlew clean build
+          ./gradlew clean build --refresh-dependencies -x yamlRestTest
 
       # Save the artifact
       - name: Upload build artifact

@@ -352,3 +352,9 @@ task bwcTestSuite(type: RestIntegTestTask) {
 run {
     useCluster testClusters.integTest
 }
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}

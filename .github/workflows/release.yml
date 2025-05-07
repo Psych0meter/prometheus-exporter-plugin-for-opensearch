@@ -51,6 +51,8 @@ jobs:
       # Extract version from gradle.properties
       - uses: guillermocalvo/gradle-properties@v3
         id: properties
+        env:
+          JAVA_HOME: ${{ env.JAVA_HOME_21_X64 }}
         with:
           output_file: ${{ github.output }}
 

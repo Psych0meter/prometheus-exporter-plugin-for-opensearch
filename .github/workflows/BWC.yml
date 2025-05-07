@@ -3,10 +3,10 @@ name: Build and Run BWC Tests
 on:
   push:
     branches:
-      - "*"
+      - "bwc-*"
   pull_request:
     branches:
-      - "*"
+      - "bwc-*"
 
 jobs:
   build:

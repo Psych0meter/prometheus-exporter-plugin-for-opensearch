@@ -3,7 +3,7 @@ name: Build and Release
 on:
   push:
     tags:
-      - 'v*'  # Trigger bei Tags, die mit "v" beginnen
+      - 'v*'  # Trigger with Tags, starting with "v"
 
 jobs:
   build:
@@ -72,20 +72,6 @@ jobs:
           output_file: ${{ github.output }}
         env:
           JAVA_HOME: ${{ env.JAVA_HOME }}
-
-      # Create GitHub Release
-      # - name: Create GitHub Release
-      #   id: create_release
-      #   uses: actions/create-release@v1
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   with:
-      #     tag_name: ${{ github.ref_name }}
-      #     release_name: Release ${{ github.ref_name }}
-      #     body: |
-      #       Auto generated release for ${{ github.ref_name }}
-      #     draft: false
-      #     prerelease: false
 
       - name: Create GitHub Release
         id: create_release

@@ -32,20 +32,74 @@ import org.opensearch.common.settings.Settings;
  * }</pre>
  */
 public class PrometheusSettings {
+    /**
+     * Enum representing different index filtering options for Prometheus metrics collection.
+     * These options define how indices are expanded or filtered when collecting metrics.
+     */
     public enum INDEX_FILTER_OPTIONS {
+
+        /**
+         * Expand only open indices.
+         */
         STRICT_EXPAND_OPEN,
+
+        /**
+         * Expand only open indices, including hidden indices.
+         */
         STRICT_EXPAND_OPEN_HIDDEN,
+
+        /**
+         * Expand only open indices and forbid expanding closed indices.
+         */
         STRICT_EXPAND_OPEN_FORBID_CLOSED,
+
+        /**
+         * Expand only open indices, including hidden ones, and forbid expanding closed indices.
+         */
         STRICT_EXPAND_OPEN_HIDDEN_FORBID_CLOSED,
+
+        /**
+         * Expand only open indices, including hidden ones, and forbid expanding closed indices.
+         * Also, ignore throttled indices.
+         */
         STRICT_EXPAND_OPEN_FORBID_CLOSED_IGNORE_THROTTLED,
+
+        /**
+         * Expand both open and closed indices.
+         */
         STRICT_EXPAND_OPEN_CLOSED,
+
+        /**
+         * Expand both open and closed indices, including hidden ones.
+         */
         STRICT_EXPAND_OPEN_CLOSED_HIDDEN,
+
+        /**
+         * Use a strict policy with a single index and forbid expanding closed indices.
+         */
         STRICT_SINGLE_INDEX_NO_EXPAND_FORBID_CLOSED,
+
+        /**
+         * Leniently expand open indices.
+         */
         LENIENT_EXPAND_OPEN,
+
+        /**
+         * Leniently expand open indices, including hidden ones.
+         */
         LENIENT_EXPAND_OPEN_HIDDEN,
+
+        /**
+         * Leniently expand both open and closed indices.
+         */
         LENIENT_EXPAND_OPEN_CLOSED,
+
+        /**
+         * Leniently expand both open and closed indices, including hidden ones.
+         */
         LENIENT_EXPAND_OPEN_CLOSED_HIDDEN
     }
+
 
     static String PROMETHEUS_CLUSTER_SETTINGS_KEY = "prometheus.cluster.settings";
     static String PROMETHEUS_INDICES_KEY = "prometheus.indices";

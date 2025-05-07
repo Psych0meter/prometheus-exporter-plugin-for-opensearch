@@ -258,8 +258,14 @@ Just keep in mind that `metrics_path` must be `/_prometheus/metrics`, otherwise 
 
 To build the plugin you need JDK 17:
 
+```bash
+sdk install java 21.0.2-tem
+sdk use java 21.0.2-tem
+./gradlew wrapper
 ```
-./gradlew clean build
+
+```bash
+./gradlew clean build --refresh-dependencies
 ```
 If you have doubts about the system requirements, please check the [CI.yml](.github/workflows/CI.yml) file for more information.
 
@@ -272,12 +278,12 @@ framework
 - [internal cluster tests](src/test)
 
 Complete test suite is run using:
-```
+```bash
 ./gradlew clean check
 ```
 
 To run individual integration rest test file use:
-```
+```bash
 ./gradlew :yamlRestTest \
   -Dtests.method="test {yaml=/20_11_index_level_metrics_disabled/Dynamically disable index level metrics}"
 ```
@@ -286,7 +292,7 @@ To run individual integration rest test file use:
 
 Backward Compatibility (BWC) Testing is run manually using provided shell script:
 
-```
+```bash
 ./bwctest.sh
 ```
 

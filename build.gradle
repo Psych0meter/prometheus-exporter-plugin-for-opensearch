@@ -112,7 +112,11 @@ dependencies {
     testImplementation 'org.apache.httpcomponents.core5:httpcore5:5.3.4'
 
     // OpenSearch components
-    testImplementation("org.opensearch:opensearch-agent:${versions.opensearch}")
+    testImplementation "org.opensearch:opensearch-agent:${versions.opensearch}"
+    testImplementation "org.opensearch.test:framework:${versions.opensearch}"
+    testImplementation "org.opensearch.client:opensearch-rest-client:${versions.opensearch}"
+
+    testRuntimeOnly "org.opensearch:opensearch-javaagent:${versions.opensearch}"
 }
 
 restResources {
@@ -123,6 +127,11 @@ restResources {
 
 test {
     include '**/*Tests.class'
+    jvmArgs(
+        "--enable-preview", // Required for Java 21 features
+        "--enable-native-access=ALL-UNNAMED", // For Vector API
+        "-Dopensearch.enforcer.skip=true" // Bypass strict checks if needed
+    )
 }
 
 // Print more details if any deprecated APIs are used
